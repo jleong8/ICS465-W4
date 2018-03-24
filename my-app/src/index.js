@@ -11,6 +11,12 @@ function Square(props) {
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      autism: []
+    };
+  }
   renderSquare(i) {
     return (
       <Square
@@ -19,26 +25,34 @@ class Board extends React.Component {
       />
     );
   }
+  componentDidMount() {
+//    for (i = 0; i < this.props.dimension * this.props.dimension; i++) {
+//      this.state.autism.push (
+//        {renderSquare(i)}
+//      );
+//    });
+  }
 
   render() {
     return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
+//        {this.state.autism}
+//      <div>
+//        <div className="board-row">
+//          {this.renderSquare(0)}
+//          {this.renderSquare(1)}
+//          {this.renderSquare(2)}
+//        </div>
+//        <div className="board-row">
+//          {this.renderSquare(3)}
+//          {this.renderSquare(4)}
+//          {this.renderSquare(5)}
+//        </div>
+//        <div className="board-row">
+//          {this.renderSquare(6)}
+//          {this.renderSquare(7)}
+//          {this.renderSquare(8)}
+//        </div>
+//      </div>
     );
   }
 }
@@ -53,7 +67,8 @@ class Game extends React.Component {
         }
       ],
       stepNumber: 0,
-      xIsNext: true
+      xIsNext: true,
+      dimension: 3
     };
   }
 
@@ -110,9 +125,13 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
+            dimension={this.state.dimension}
             squares={current.squares}
             onClick={i => this.handleClick(i)}
           />
+          <button onClick={
+              () => console.log("kill urself")
+          }> fuck </button>
         </div>
         <div className="game-info">
           <div>{status}</div>
@@ -146,4 +165,3 @@ function calculateWinner(squares) {
   }
   return null;
 }
-
