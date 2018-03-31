@@ -11,9 +11,16 @@ function Square(props) {
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      autism: []
+    };
+  }
   renderSquare(i) {
     return (
       <Square
+        key={i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -21,23 +28,19 @@ class Board extends React.Component {
   }
 
   render() {
+    const boxes = this.props.dimension.map((e, i, a) => {
+      return (
+        <div>
+          { this.renderSquare(i) }
+        </div>
+      );
+    });
+    const styles = {
+      width: 34 * Math.sqrt(this.props.dimension.length)
+    }
     return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+      <div style={styles}>
+        {boxes}
       </div>
     );
   }
@@ -53,7 +56,8 @@ class Game extends React.Component {
         }
       ],
       stepNumber: 0,
-      xIsNext: true
+      xIsNext: true,
+      dimension: [0, 1, 2, 3, 4, 5, 6,7,8]
     };
   }
 
@@ -110,9 +114,21 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
+            dimension={this.state.dimension}
             squares={current.squares}
             onClick={i => this.handleClick(i)}
           />
+          <button onClick={
+              () => {
+                let arr = [];
+                for (let i = 0; i < (Math.sqrt(this.state.dimension.length) + 1) * (Math.sqrt(this.state.dimension.length) + 1); i++) {
+                  arr.push(i);
+                }
+                this.setState({
+                  dimension: arr
+                })
+              }
+          }> Expand </button>
         </div>
         <div className="game-info">
           <div>{status}</div>
