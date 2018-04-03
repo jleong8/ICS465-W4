@@ -14,7 +14,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      autism: []
+      test: []
     };
   }
   renderSquare(i) {
